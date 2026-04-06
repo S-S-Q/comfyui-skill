@@ -56,8 +56,11 @@ def apply_params_to_workflow(
 
             # 解析 field_path
             parts = field_path.split(".")
-            node_id = parts[0]  # e.g., "3"
+            node_id_str = parts[0]  # e.g., "3"
             field_name = parts[2]  # e.g., "seed"
+
+            # 尝试字符串和整数两种 node_id
+            node_id = int(node_id_str) if node_id_str.isdigit() else node_id_str
 
             # 更新 workflow_data
             if node_id in workflow_data:
