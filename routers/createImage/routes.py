@@ -59,13 +59,17 @@ def apply_params_to_workflow(
             node_id_str = parts[0]  # e.g., "3"
             field_name = parts[2]  # e.g., "seed"
 
-            # 尝试字符串和整数两种 node_id
-            node_id = int(node_id_str) if node_id_str.isdigit() else node_id_str
+            # 同时尝试字符串和整数两种 node_id
+            target_node_id = None
+            if node_id_str in workflow_data:
+                target_node_id = node_id_str
+            elif node_id_str.isdigit() and int(node_id_str) in workflow_data:
+                target_node_id = int(node_id_str)
 
             # 更新 workflow_data
-            if node_id in workflow_data:
-                if "inputs" in workflow_data[node_id]:
-                    workflow_data[node_id]["inputs"][field_name] = value
+            if target_node_id is not None:
+                if "inputs" in workflow_data[target_node_id]:
+                    workflow_data[target_node_id]["inputs"][field_name] = value
 
     return workflow_data
 
