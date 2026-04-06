@@ -228,7 +228,7 @@ async def _run_batch_evaluation(task_id: str, folder_path: str, recursive: bool)
                 txt_path = image_path.with_suffix(".txt")
                 try:
                     with txt_path.open("w", encoding="utf-8") as f:
-                        f.write(f"Score: {result['score']}/10\n")
+                        f.write(f"Score: {result['score']:.1f}/10\n")
                         f.write(f"Comment: {result['comment']}\n")
                     result["txt_file"] = str(txt_path)
                 except Exception as e:
