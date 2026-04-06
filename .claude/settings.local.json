@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(python:*)",
+      "WebSearch",
+      "Bash(/f/comfy_ui_lsq/test_report.md:*)",
+      "Bash(echo:*)",
+      "Bash(taskkill:*)",
+      "Bash(__NEW_LINE_dcf418424b58e1fb__:*)",
+      "Bash(__NEW_LINE_ab8f7ddd941317a6__ python:*)",
+      "Bash(__NEW_LINE_900a884ea376d4c5__ python:*)",
+      "Bash(__NEW_LINE_2b91845ef16ad585__ python:*)",
+      "Bash(pip install:*)",
+      "Bash(/e/comfyui-wan/python/python:*)",
+      "Bash(lsof -i :8000)",
+      "Bash(netstat:*)",
+      "Bash(kill 2768:*)",
+      "Bash(xargs -I {} kill {} sleep 1 echo \"Port 8000 freed\")",
+      "Bash(xargs -I {} kill {})",
+      "Bash(pkill:*)",
+      "Bash(ls:*)",
+      "Bash(lsof:*)"
+    ]
+  }
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComfyUI 工作流管理</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ComfyUI 工作流管理</h1>
+            <div class="api-status">
+                <span id="api-status" class="status offline">检测中...</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- 工作流列表 -->
+            <section class="workflow-list-section">
+                <div class="section-header">
+                    <h2>工作流列表</h2>
+                    <button id="refresh-btn" class="btn btn-secondary">刷新</button>
+                </div>
+                <div id="workflow-list" class="workflow-list">
+                    <div class="loading">加载中...</div>
+                </div>
+            </section>
+
+            <!-- 上传工作流 -->
+            <section class="upload-section">
+                <h2>上传工作流</h2>
+                <div class="upload-form">
+                    <input type="text" id="workflow-name" placeholder="工作流名称" required>
+                    <input type="file" id="workflow-file" accept=".json" required>
+                    <button id="upload-btn" class="btn btn-primary">上传</button>
+                </div>
+                <div id="upload-result" class="result"></div>
+            </section>
+
+            <!-- 工作流详情 -->
+            <section class="workflow-detail-section" id="workflow-detail-section" style="display: none;">
+                <h2>工作流详情: <span id="detail-workflow-name"></span></h2>
+
+                <!-- 基本信息 -->
+                <div class="detail-card">
+                    <h3>基本信息</h3>
+                    <button id="delete-workflow-btn" class="btn btn-danger">删除工作流</button>
+                </div>
+
+                <!-- 屏蔽字段 -->
+                <div class="detail-card">
+                    <h3>屏蔽字段</h3>
+                    <p class="hint">勾选的字段将在生成图片时跳过（使用默认值）</p>
+                    <div id="masked-fields" class="masked-fields-list">
+                        <div class="loading">加载中...</div>
+                    </div>
+                    <button id="save-masks-btn" class="btn btn-primary">保存屏蔽设置</button>
+                </div>
+
+                <!-- 依赖检查 -->
+                <div class="detail-card">
+                    <h3>依赖检查</h3>
+                    <button id="validate-workflow-btn" class="btn btn-secondary">检查依赖</button>
+                    <div id="validate-result" class="result"></div>
+                </div>
+
+                <!-- 生成图片 -->
+                <div class="detail-card">
+                    <h3>生成图片</h3>
+                    <button id="generate-btn" class="btn btn-primary">生成图片</button>
+                    <div id="generate-result" class="result"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 确认删除对话框 -->
+    <div id="delete-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>确认删除</h3>
+            <p>确定要删除工作流 "<span id="delete-workflow-name"></span>" 吗？</p>
+            <div class="modal-buttons">
+                <button id="confirm-delete-btn" class="btn btn-danger">确认删除</button>
+                <button id="cancel-delete-btn" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
