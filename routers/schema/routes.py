@@ -21,6 +21,7 @@ class FieldDefinition(BaseModel):
     min: Optional[float] = None
     max: Optional[float] = None
     options: Optional[List[str]] = None  # for enum-like fields
+    maskable: bool = True  # 是否可屏蔽，checkpoint模型选择不允许屏蔽
 
 
 class SchemaDefinition(BaseModel):
@@ -82,11 +83,17 @@ def auto_generate_schema(workflow_id: str) -> SchemaDefinition:
             else:
                 field_type = "string"
 
+            # checkpoint模型选择字段不允许屏蔽
+            maskable = True
+            if class_type == "CheckpointLoaderSimple" and field_name == "ckpt_name":
+                maskable = False
+
             exposed_fields[key] = FieldDefinition(
                 field_path=f"{node_id}.inputs.{field_name}",
                 type=field_type,
                 label=f"{title} - {field_name}",
-                default=field_value
+                default=field_value,
+                maskable=maskable
             )
 
     return SchemaDefinition(

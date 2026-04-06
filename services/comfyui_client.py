@@ -148,40 +148,45 @@ class ComfyUIClient:
         }
 
     async def get_model_list(self) -> Dict[str, List[str]]:
-        """
-        获取所有模型列表
-        ComfyUI 的 /models 接口返回目录名称列表
-        """
-        response = await self.client.get("/models")
-        response.raise_for_status()
-        folders = response.json()
-
-        # /models 返回的是目录名称列表，如 ["checkpoints", "loras", ...]
-        # 转换为以目录为 key 的字典
-        result = {folder: [] for folder in folders}
+        """获取所有模型列表"""
+        result = {
+            "checkpoints": await self.get_checkpoint_list(),
+            "loras": await self.get_lora_list(),
+            "vaes": await self.get_vae_list(),
+            "upscale_models": await self.get_upscale_model_list(),
+            "embeddings": await self.get_embed_list()
+        }
         return result
 
     async def get_lora_list(self) -> List[str]:
         """获取 LoRA 模型列表"""
-        # ComfyUI 模型存储在本地目录，无法直接通过 API 获取
-        # 返回空列表，实际模型列表需要通过文件系统获取
-        return []
+        response = await self.client.get("/models/loras")
+        response.raise_for_status()
+        return response.json()
 
     async def get_checkpoint_list(self) -> List[str]:
         """获取 Checkpoint 模型列表"""
-        return []
+        response = await self.client.get("/models/checkpoints")
+        response.raise_for_status()
+        return response.json()
 
     async def get_vae_list(self) -> List[str]:
         """获取 VAE 模型列表"""
-        return []
+        response = await self.client.get("/models/vae")
+        response.raise_for_status()
+        return response.json()
 
     async def get_upscale_model_list(self) -> List[str]:
         """获取 Upscale 模型列表"""
-        return []
+        response = await self.client.get("/models/upscale_models")
+        response.raise_for_status()
+        return response.json()
 
     async def get_embed_list(self) -> List[str]:
         """获取 Embedding 模型列表"""
-        return []
+        response = await self.client.get("/models/embeddings")
+        response.raise_for_status()
+        return response.json()
 
     # ==================== ComfyUI Manager API ====================
 

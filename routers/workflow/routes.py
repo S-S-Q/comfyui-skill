@@ -53,6 +53,11 @@ def auto_generate_schema_from_data(workflow_data: Dict[str, Any], workflow_id: s
                     else:
                         field_type = "string"
 
+                    # checkpoint模型选择字段不允许屏蔽
+                    maskable = True
+                    if class_type == "CheckpointLoaderSimple" and field_name == "ckpt_name":
+                        maskable = False
+
                     exposed_fields[key] = {
                         "field_path": f"{node_id}.inputs.{field_name}",
                         "type": field_type,
@@ -61,7 +66,8 @@ def auto_generate_schema_from_data(workflow_data: Dict[str, Any], workflow_id: s
                         "default": field_value,
                         "min": None,
                         "max": None,
-                        "options": None
+                        "options": None,
+                        "maskable": maskable
                     }
     else:
         # 旧格式
@@ -98,6 +104,11 @@ def auto_generate_schema_from_data(workflow_data: Dict[str, Any], workflow_id: s
                 else:
                     field_type = "string"
 
+                # checkpoint模型选择字段不允许屏蔽
+                maskable = True
+                if class_type == "CheckpointLoaderSimple" and field_name == "ckpt_name":
+                    maskable = False
+
                 exposed_fields[key] = {
                     "field_path": f"{node_id}.inputs.{field_name}",
                     "type": field_type,
@@ -106,7 +117,8 @@ def auto_generate_schema_from_data(workflow_data: Dict[str, Any], workflow_id: s
                     "default": field_value,
                     "min": None,
                     "max": None,
-                    "options": None
+                    "options": None,
+                    "maskable": maskable
                 }
 
     return {
